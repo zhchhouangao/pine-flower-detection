@@ -2,24 +2,36 @@ import streamlit as st
 import os
 import sys
 
-# 设置环境变量来解决 OpenCV 在服务器环境中的问题
+# 设置环境变量来避免 OpenCV 的 libGL 问题
 os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
 os.environ['OPENCV_LOG_LEVEL'] = 'ERROR'
-os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = 'video_codec;h264_cuvid'
 
-# 强制导入 OpenCV
+# 尝试导入 OpenCV，如果失败提供明确错误信息
 try:
     import cv2
-    st.success("✅ OpenCV loaded successfully")
-except Exception as e:
-    st.error(f"❌ OpenCV import failed: {e}")
-    # 如果 OpenCV 完全无法导入，应用无法运行
+    # 检查 OpenCV 版本和功能
+    st.success(f"✅ OpenCV {cv2.__version__} 加载成功")
+except ImportError as e:
+    st.error(f"❌ OpenCV 导入失败: {e}")
     st.stop()
+except Exception as e:
+    st.warning(f"⚠️ OpenCV 加载有警告，但继续运行: {e}")
 
+# 继续其他导入
 import numpy as np
 import tempfile
 from datetime import datetime
 from collections import defaultdict
+
+# 检查 YOLO
+try:
+    from ultralytics import YOLO
+    st.success("✅ YOLO 导入成功")
+except ImportError as e:
+    st.error(f"❌ YOLO 导入失败: {e}")
+    st.stop()
+
+# 你的其他代码继续...
 from ultralytics import YOLO
 import streamlit as st
 import cv2
