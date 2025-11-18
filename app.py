@@ -1,11 +1,28 @@
 import streamlit as st
-import cv2
+import os
+import sys
+
+# 设置环境变量来解决 OpenCV 在服务器环境中的问题
+os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
+os.environ['OPENCV_LOG_LEVEL'] = 'ERROR'
+os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = 'video_codec;h264_cuvid'
+
+# 强制导入 OpenCV
+try:
+    import cv2
+    st.success("✅ OpenCV loaded successfully")
+except Exception as e:
+    st.error(f"❌ OpenCV import failed: {e}")
+    # 如果 OpenCV 完全无法导入，应用无法运行
+    st.stop()
+
 import numpy as np
 import tempfile
-import os
 from datetime import datetime
 from collections import defaultdict
 from ultralytics import YOLO
+import streamlit as st
+import cv2
 
 # 页面配置
 st.set_page_config(
