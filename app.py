@@ -1,30 +1,11 @@
 import streamlit as st
-import os
-import sys
-
-# 在导入 cv2 之前设置环境变量
-os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
-os.environ['OPENCV_LOG_LEVEL'] = 'ERROR'
-
-# 尝试导入 OpenCV
-try:
-    import cv2
-    st.success("✅ OpenCV 导入成功")
-except ImportError as e:
-    st.error(f"❌ OpenCV 导入失败: {e}")
-    st.stop()
-except Exception as e:
-    st.warning(f"⚠️ OpenCV 导入有警告: {e}")
-
+import cv2
 import numpy as np
 import tempfile
+import os
 from datetime import datetime
 from collections import defaultdict
 from ultralytics import YOLO
-
-# 你的原始代码继续...
-import streamlit as st
-import cv2
 
 # 页面配置
 st.set_page_config(
