@@ -2,37 +2,27 @@ import streamlit as st
 import os
 import sys
 
-# 设置环境变量来避免 OpenCV 的 libGL 问题
+# 在导入 cv2 之前设置环境变量
 os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
 os.environ['OPENCV_LOG_LEVEL'] = 'ERROR'
 
-# 尝试导入 OpenCV，如果失败提供明确错误信息
+# 尝试导入 OpenCV
 try:
     import cv2
-    # 检查 OpenCV 版本和功能
-    st.success(f"✅ OpenCV {cv2.__version__} 加载成功")
+    st.success("✅ OpenCV 导入成功")
 except ImportError as e:
     st.error(f"❌ OpenCV 导入失败: {e}")
     st.stop()
 except Exception as e:
-    st.warning(f"⚠️ OpenCV 加载有警告，但继续运行: {e}")
+    st.warning(f"⚠️ OpenCV 导入有警告: {e}")
 
-# 继续其他导入
 import numpy as np
 import tempfile
 from datetime import datetime
 from collections import defaultdict
-
-# 检查 YOLO
-try:
-    from ultralytics import YOLO
-    st.success("✅ YOLO 导入成功")
-except ImportError as e:
-    st.error(f"❌ YOLO 导入失败: {e}")
-    st.stop()
-
-# 你的其他代码继续...
 from ultralytics import YOLO
+
+# 你的原始代码继续...
 import streamlit as st
 import cv2
 
